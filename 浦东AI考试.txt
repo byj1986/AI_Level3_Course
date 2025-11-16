@@ -1,0 +1,63 @@
+import pandas as pd
+
+pd.read_csv("xxx.csv")
+
+
+1
+df.loc[df['工资'].between(6000, 8000)]
+df['收入归类'] = np.where(df['工资']>7000,"高收入","一般")
+df['部门'].value_counts()
+df['年龄组']=pd.cut(df['年龄'], bins=[0,25,35,50],labels=['青年','中年','中老年'])
+df.groupby('部门').agg({'工资':'mean', '部门': 'count'}).rename(columns={'工资':'平均工资', '部门':'总人数'})
+print("总和工资",df['工资'].sum())
+print("平均工资",df['工资'].mean())
+print("工资方差",df['工资'].std())
+df['年龄'] = df['年龄'].ffill().astype(int)
+
+bmi_risk_rate =  data.groupby('BMIRange')['RiskLevel'].apply(lambda x: (x == '高风险患者').mean())
+sensor_stats = data.groupby('SensorType')['Value'].agg(['count', 'mean'])
+location_stats = data[data['SensorType'].isin(['Temperature', 'Humidity'])].groupby(['Location', 'SensorType'])['Value'].mean().unstack()
+
+
+data['is_abnormal'] = np.where(
+    ((data['SensorType'] == 'Temperature') & ((data['Value'] < -10) | (data['Value'] > 50))) |
+    ((data['SensorType'] == 'Humidity') & ((data['Value'] < 0) | (data['Value'] > 100))),
+    True, False
+)
+
+data['Value'].fillna(method='ffill', inplace=True)
+
+cleaned_data.to_csv('cleaned_sensor_data.csv', index=False)
+
+
+data['PurchaseAmount'] = (data['PurchaseAmount'] - data['PurchaseAmount'].mean()) / data['PurchaseAmount'].std()  # PurchaseAmount数据标准化 2分
+
+gender_stats = data.groupby('Gender').agg({'Speed': 'mean', 'TravelDistance': 'mean', 'TravelTime': 'mean'})
+
+2
+data['horsepower'] = pd.to_numeric(data['horsepower'], errors='coerce')
+data = data.dropna(subset=['horsepower'])
+
+
+data[numerical_features] = scaler.fit_transform(data[numerical_features])
+
+selected_features = ['cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'model year', 'origin']
+X = data[selected_features]
+y = data['mpg']
+
+
+
+cleaned_data = pd.concat([X, y], axis=1)
+
+
+numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
+
+
+
+Q1 = data[numeric_cols].quantile(0.25)
+Q3 = data[numeric_cols].quantile(0.75)
+IQR = Q3 - Q1
+
+
+data_cleaned = data[~((data[numeric_cols] < (Q1 - 1.5 * IQR)) | (data[numeric_cols] > (Q3 + 1.5 * IQR))).any(axis=1)]
+
